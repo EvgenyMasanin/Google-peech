@@ -1,0 +1,46 @@
+@import '~antd/dist/antd.less';
+* {
+  box-sizing: border-box;
+}
+body {
+  padding: 0 1rem;
+}
+
+#root {
+  height: 100%;
+}
+
+.steps-container {
+  padding: 1rem;
+}
+
+.ant-steps-item-process
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title::after {
+  background-color: #777;
+}
+
+.ant-steps-item-wait
+  > .ant-steps-item-container
+  > .ant-steps-item-content
+  > .ant-steps-item-title::after {
+  background-color: #777;
+}
+
+.ant-card-bordered,
+.ant-card-hoverable:hover {
+  border-color: #777;
+  border-radius: 10px;
+}
+
+.container {
+  padding: 1rem;
+}
+
+@media screen and(min-width: 992px) {
+  .word-col {
+    flex: 1 1 20%;
+    max-width: 20%;
+  }
+}
