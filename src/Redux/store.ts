@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createBrowserHistory } from 'history'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import { combineReducers, applyMiddleware, createStore } from 'redux'
+import { statisticReducer } from './Statistic/StatisticReducer'
 
 export const history = createBrowserHistory()
 
@@ -15,6 +16,7 @@ const sagasMiddleware = createSagaMiddleware()
 const rootReducer = combineReducers({
   userData: userDataReducer,
   words: wordsReducer,
+  statistic: statisticReducer,
   router: connectRouter(history),
 })
 

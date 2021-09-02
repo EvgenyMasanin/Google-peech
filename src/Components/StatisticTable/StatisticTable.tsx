@@ -1,595 +1,152 @@
-import React from 'react'
-import { Table, Menu, Dropdown, Button } from 'antd'
+import React, { useState, useEffect, Fragment, FC } from 'react'
+import { Table, Typography, Tag, Button } from 'antd'
 import Column from 'antd/lib/table/Column'
 import ColumnGroup from 'antd/lib/table/ColumnGroup'
+import { IGameResults, IWordAfterGame } from '../../Classes/IGemeResults'
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons'
+const { Paragraph } = Typography
 
-const data = [
-  {
-    key: '1',
-    userName: 'Bob',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwdw',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-  {
-    key: '2',
-    userName: 'Bob2',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwdw',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-  {
-    key: '2',
-    userName: 'Bob2',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwdw',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-  {
-    key: '2',
-    userName: 'Bob2',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwdw',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-  {
-    key: '2',
-    userName: 'Bob2',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwdw',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-  {
-    key: '2',
-    userName: 'Bob2',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwyy',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-  {
-    key: '2',
-    userName: 'Bob2',
-    correct: 32,
-    unCorrect: 28,
-    lv1: [
-      'qwertyyyyyyy',
-      'qwewdwdyy',
-      'qwwyyyyy',
-      'qwerwdqwdyyy',
-      'qwyyy',
-      'qwwwdyyyyyyy',
-      'qwyyy',
-      'qwwdwdwdwdw',
-      'qwertyy',
-      'qwewfefyy',
-    ],
-    lv2: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv3: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv4: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv5: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    lv6: [
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-      'qwertyyyyyyy',
-    ],
-    dateOfGame: new Date().toLocaleString(),
-  },
-]
+interface IStatisticTable {
+  words: Array<IGameResults>
+  isLoading: boolean
+}
 
-const StatisticTable = () => {
-  const render = (tags: any) => (
-    <Dropdown
-      overlay={
-        <Menu>
-          {tags.map((tag: any) => (
-            <Menu.Item key={tag}>{tag}</Menu.Item>
+const StatisticTable: FC<IStatisticTable> = ({ words, isLoading }) => {
+  const [ellipsis, setEllipsis] = useState({} as any)
+
+  useEffect(() => {
+    if (words.length) {
+      words?.sort((a: IGameResults, b: IGameResults) => b.score - a.score)
+      setEllipsis(
+        words?.reduce((accum: any, el) => {
+          accum[el.id] = true
+          return accum
+        }, {})
+      )
+    }
+  }, [words])
+
+  const renderWordsGroups = (
+    wordsAfterGame: Array<IWordAfterGame>,
+    row: IGameResults,
+    ind: number
+  ) => {
+    return (
+      <Paragraph
+        style={{ marginTop: '1rem', marginBottom: 0 }}
+        ellipsis={{
+          rows: ellipsis?.[row.id] ? 2 : 10,
+        }}
+      >
+        {wordsAfterGame
+          .sort((a, b) => b.word.length - a.word.length)
+          .map((wordAftergame) => (
+            <Fragment key={wordAftergame.id + ind}>
+              <Tag color={wordAftergame.isCorrect ? 'green' : 'red'}>
+                {wordAftergame.word}
+              </Tag>{' '}
+              <br />
+            </Fragment>
           ))}
-        </Menu>
-      }
-      placement="bottomCenter"
-      arrow
-    >
-      <Button>show words</Button>
-    </Dropdown>
-  )
+      </Paragraph>
+    )
+  }
+
+  const renderViev = (_: any, row: IGameResults) => {
+    return (
+      <Button
+        type="primary"
+        shape="circle"
+        icon={ellipsis?.[row.id] ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+        onClick={() => {
+          setEllipsis({ ...ellipsis, [row.id]: !ellipsis[row.id] })
+        }}
+      />
+    )
+  }
 
   return (
-    <Table bordered dataSource={data}>
-      <Column title="User name" dataIndex="userName" key="userName" />
-      <Column title="Correct" dataIndex="correct" key="correct" />
-      <Column title="Uncorrect" dataIndex="unCorrect" key="unCorrect" />
+    <Table
+      bordered
+      dataSource={words?.sort(
+        (a: IGameResults, b: IGameResults) => b.score - a.score
+      )}
+      size="large"
+      pagination={{ pageSize: 6 }}
+      style={{ flex: '1 1 auto' }}
+      scroll={{ y: '70vh', x: 1500 }}
+      loading={isLoading}
+    >
+      <Column
+        title="Show/Hide"
+        key="view"
+        render={renderViev}
+        fixed="left"
+        width={70}
+      />
+      <Column
+        title="User name"
+        dataIndex={['user', 'userName']}
+        key="userName"
+        fixed="left"
+      />
+      <Column title="Score" dataIndex="score" key="score" fixed="left" />
+      <Column
+        title="Correct"
+        dataIndex="countOfCorrect"
+        key="correct"
+        fixed="left"
+      />
+      <Column
+        title="Uncorrect"
+        dataIndex="countOfUnCorrect"
+        key="unCorrect"
+        fixed="left"
+      />
       <ColumnGroup title="Words">
-        <Column title="level 1" dataIndex="lv1" key="lv1" render={render} />
-        <Column title="level 2" dataIndex="lv2" key="lv2" render={render} />
-        <Column title="level 3" dataIndex="lv3" key="lv3" render={render} />
-        <Column title="level 4" dataIndex="lv4" key="lv4" render={render} />
-        <Column title="level 5" dataIndex="lv5" key="lv5" render={render} />
-        <Column title="level 6" dataIndex="lv6" key="lv6" render={render} />
+        <Column
+          title="level 1"
+          dataIndex="lv1"
+          key="lv1"
+          render={renderWordsGroups}
+        />
+        <Column
+          title="level 2"
+          dataIndex="lv2"
+          key="lv2"
+          render={renderWordsGroups}
+        />
+        <Column
+          title="level 3"
+          dataIndex="lv3"
+          key="lv3"
+          render={renderWordsGroups}
+        />
+        <Column
+          title="level 4"
+          dataIndex="lv4"
+          key="lv4"
+          render={renderWordsGroups}
+        />
+        <Column
+          title="level 5"
+          dataIndex="lv5"
+          key="lv5"
+          render={renderWordsGroups}
+        />
+        <Column
+          title="level 6"
+          dataIndex="lv6"
+          key="lv6"
+          render={renderWordsGroups}
+        />
       </ColumnGroup>
-      <Column title="date of game" dataIndex="dateOfGame" key="dateOfGame" />
+      <Column
+        title="Date of game"
+        dataIndex="dateOfGame"
+        key="dateOfGame"
+        fixed="right"
+      />
     </Table>
   )
 }

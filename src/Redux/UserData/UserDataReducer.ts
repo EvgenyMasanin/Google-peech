@@ -1,3 +1,4 @@
+import { IUser } from '../../Firebase/api'
 import {
   IClearDataAction,
   IIsAuthAction,
@@ -9,7 +10,10 @@ import {
 
 const initialState = {
   error: '',
-  userName: ' ',
+  user: {
+    userName: ' ',
+    email: '',
+  } as IUser | null,
   isLoading: false,
   isAuth: false,
 }
@@ -31,8 +35,9 @@ export const userDataReducer = (
     case UserDataActionTypes.SET_USER:
       return {
         ...state,
-        userName: action.payload,
+        user: action.payload,
         isLoading: false,
+        isAuth: true,
         error: '',
       }
     case UserDataActionTypes.IS_LOADING:
@@ -52,7 +57,7 @@ export const userDataReducer = (
         isAuth: true,
       }
     case UserDataActionTypes.CLEAR_DATA:
-      return { ...initialState, userName: '' }
+      return { ...initialState, user: null }
     default:
       return state
   }

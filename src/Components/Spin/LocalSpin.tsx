@@ -1,5 +1,6 @@
 import { Spin } from 'antd'
 import React, { FC } from 'react'
+import classes from './spin.module.css'
 
 interface ILocalSpin {
   size?: 'small' | 'default' | 'large'
@@ -8,14 +9,7 @@ interface ILocalSpin {
 
 const LocalSpin: FC<ILocalSpin> = ({ size = 'default', tip }) => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-      }}
-    >
+    <div className={classes.localSpin}>
       <Spin size={size} tip={tip} />
     </div>
   )

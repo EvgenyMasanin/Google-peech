@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import FullSizeSpin from '../Spin/FullScreenSpin'
 
 interface IPicture {
-  src: string
+  src: string | null
 }
 
 const Picture: FC<IPicture> = ({ src }) => {
@@ -17,30 +17,19 @@ const Picture: FC<IPicture> = ({ src }) => {
   }, [src])
 
   return (
-    <div
-      style={{
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-      }}
-    >
-      <>
-        {isLoading && <FullSizeSpin />}
-        <img
-          onLoad={handleLoad}
-          src={src ? src : 'https://speakit.netlify.app/img/blank.jpg'}
-          alt="visualization"
-          width={400}
-          height={265}
-          style={{
-            borderRadius: 5,
-            backgroundColor: '#a2d6c6',
-            display: 'inline-block',
-          }}
-        />
-      </>
-    </div>
+    <>
+      {isLoading && <FullSizeSpin />}
+      <img
+        onLoad={handleLoad}
+        src={src ? src : 'https://speakit.netlify.app/img/blank.jpg'}
+        alt="visualization"
+        className="w100 h100"
+        style={{
+          borderRadius: 5,
+          backgroundColor: '#a2d6c6',
+        }}
+      />
+    </>
   )
 }
 

@@ -1,16 +1,11 @@
 import api from './axios'
-//?page=2&group=0
 
 export interface IWordData {
-  id: number
+  id: string
   word: string
   image: string
   audio: string
   transcription: string
-  //   audioMeaning: string
-  //   audioExample: string
-  //   textMeaning: string
-  //   textExample: string
 }
 
 const getWords = async (): Promise<Array<Array<IWordData>>> => {

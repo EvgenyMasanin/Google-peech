@@ -1,44 +1,53 @@
 import Main from '../Components/Main/Main'
-import Steps from '../Components/Steps/Steps'
-import Header from '../Components/Header/Header'
 import Buttons from '../Components/Buttos/Buttons'
 import Picture from '../Components/Picture/Picture'
-import DropDown from '../Components/DropDown/DropDown'
+import useGame from '../Hooks/useGame'
+import GameResults from '../Components/GameResults/GameResults'
+import SideResults from '../Components/SideResults/SideResults'
 import WordsContainer from '../Components/WordsContainer/WordsContainer'
-import { useDispatch } from 'react-redux'
 import { useTypedSelector } from '../Redux/store'
-import { changeLevelAction } from '../Redux/Words/wordsActions'
-
-export const URL =
-  'https://raw.githubusercontent.com/EvgenyMasanin//rslang-data/master/'
+import { FORK_URL } from '../Axios/axios'
 
 const MainPage = () => {
   const {
-    words: { words, selectedWord, level },
+    words: { words, selectedWord, level, isLoading, gameResults, gameStarted },
   } = useTypedSelector((state) => ({
     words: state.words,
     userData: state.userData,
   }))
 
-  const dispatch = useDispatch()
-
-  const changeLevel = (level: number) => {
-    dispatch(changeLevelAction(level))
-  }
+  const { isModalVisible, setIsModalVisible, startGame, stopGame } = useGame()
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Header
-        title="Google peech"
-        content={<Steps current={level} onChange={changeLevel} />}
-        buttons={[<DropDown key="1" />]}
-      />
-      <Main>
-        <Picture src={selectedWord.image && `${URL}${selectedWord.image}`} />
+    <>
+      <Main
+        picture={
+          <Picture
+            src={
+              selectedWord &&
+              selectedWord.image &&
+              `${FORK_URL}${selectedWord.image}`
+            }
+          />
+        }
+        sideResults={gameResults && <SideResults gameResults={gameResults} />}
+      >
+        {gameResults && (
+          <GameResults
+            gameResults={gameResults}
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+          />
+        )}
       </Main>
       <WordsContainer words={words[level] ?? []} />
-      <Buttons />
-    </div>
+      <Buttons
+        isLoading={isLoading}
+        gameStarted={gameStarted}
+        stopGame={stopGame}
+        startGame={startGame}
+      />
+    </>
   )
 }
 

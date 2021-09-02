@@ -1,0 +1,15 @@
+.dropDown {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.avatar {
+  background-color: #1da57a;
+}
+
+.text {
+  font-size: 16px;
+  margin-left: 10px;
+}

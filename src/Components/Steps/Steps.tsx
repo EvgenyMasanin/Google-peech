@@ -15,12 +15,12 @@ const steps = [
 
 interface ISteps {
   current: number
-  onChange: (current: number) => void
+  onChange?: (current: number) => void
 }
 
 const Steps: React.FC<ISteps> = ({ current, onChange }: ISteps) => {
   return (
-    <div className="steps-container">
+    <div>
       <StepsAntd current={current} onChange={onChange}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />

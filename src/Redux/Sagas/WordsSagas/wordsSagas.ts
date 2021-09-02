@@ -1,7 +1,7 @@
 import getWords from '../../../Axios/requests'
 import { paths } from '../../../Routes/Routes'
 import { LOCATION_CHANGE } from 'connected-react-router'
-import { wordsActionsTypes } from '../../Words/interfaces'
+import { WordsActionsTypes } from '../../Words/interfaces'
 import { call, fork, put, take, takeEvery } from 'redux-saga/effects'
 import { setIsLoadingAction, setWordsAction } from '../../Words/wordsActions'
 
@@ -24,5 +24,5 @@ export function* getWordsOnRouteEnter(): any {
 
 export function* wordsSaga() {
   yield fork(getWordsOnRouteEnter)
-  yield takeEvery(wordsActionsTypes.GET_WORDS, getWordsWorker)
+  yield takeEvery(WordsActionsTypes.GET_WORDS, getWordsWorker)
 }

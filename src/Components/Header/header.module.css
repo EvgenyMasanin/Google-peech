@@ -2,9 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
 }
 
 .title {
+  color: #000;
   font-size: 24px;
 }
 

@@ -1,5 +1,5 @@
 import { IAuthFields } from '../../Components/AuthForm/AuthForm'
-import { firebaseServiceMethods } from '../../Firebase/api'
+import { firebaseServiceMethods, IUser } from '../../Firebase/api'
 import {
   IActionCreator,
   IClearDataAction,
@@ -26,11 +26,11 @@ export const authSetErrorAction: IActionCreator<string, ISetErrorAction> = (
   payload: error,
 })
 
-export const setUserAction: IActionCreator<string, ISetUserAction> = (
-  userName
+export const setUserAction: IActionCreator<IUser | null, ISetUserAction> = (
+  user
 ) => ({
   type: UserDataActionTypes.SET_USER,
-  payload: userName,
+  payload: user,
 })
 
 export const signinAction: IActionCreator<IAuthFields, ISigninAction> = (
@@ -57,4 +57,9 @@ export const setIsAuthAction = (): IIsAuthAction => ({
 
 export const claerDataAction = (): IClearDataAction => ({
   type: UserDataActionTypes.CLEAR_DATA,
+})
+
+export const clearError = (): ISetErrorAction => ({
+  type: UserDataActionTypes.SET_ERROR,
+  payload: '',
 })

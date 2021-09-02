@@ -4,7 +4,7 @@ import { Card } from 'antd'
 import classes from './wordCard.module.css'
 import { IWordData } from '../../Axios/requests'
 import { useTypedSelector } from '../../Redux/store'
-import { URL } from '../../Pages/MainPage'
+import { FORK_URL } from '../../Axios/axios'
 
 interface IWordCard {
   word: IWordData
@@ -15,23 +15,23 @@ const WordCard: React.FC<IWordCard> = ({ word, selectWord }) => {
   const [cardClasses, setCardClasses] = useState([classes.antCardBody])
 
   const {
-    words: { selectedWord },
+    words: { selectedWord, gameStarted },
   } = useTypedSelector((state) => ({
     words: state.words,
   }))
 
   useEffect(() => {
-    if (word.id === selectedWord.id)
+    if (word.id === selectedWord?.id) {
       setCardClasses([classes.antCardBody, classes.active])
-    else setCardClasses([classes.antCardBody, classes.common])
+    } else setCardClasses([classes.antCardBody, classes.common])
   }, [selectedWord])
 
   const onClick = () => {
-    selectWord(word)
-    try {
+    if (!gameStarted) {
+      selectWord(word)
       audioRef.current?.play()
-    } catch (error) {
-      console.log(error)
+    } else if (selectedWord?.id === word.id) {
+      audioRef.current?.play()
     }
   }
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -54,7 +54,7 @@ const WordCard: React.FC<IWordCard> = ({ word, selectWord }) => {
         <div>{word.word}</div>
         <div>{word.transcription}</div>
       </div>
-      <audio ref={audioRef} src={`${URL}${word.audio}`}></audio>
+      <audio ref={audioRef} src={`${FORK_URL}${word.audio}`}></audio>
     </Card>
   )
 }

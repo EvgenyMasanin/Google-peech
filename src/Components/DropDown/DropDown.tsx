@@ -1,56 +1,50 @@
-import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Dropdown, Menu, Spin, Typography } from 'antd'
-import Avatar from 'antd/lib/avatar/avatar'
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { useTypedSelector } from '../../Redux/store'
-import { signOutAction } from '../../Redux/UserData/UserDataActions'
+import WordItem from '../WordItem/WordItem'
+import { IWordAfterGame } from '../../Classes/IGemeResults'
+import { Button, Tag } from 'antd'
+import React, { useState, FC } from 'react'
+import { DownOutlined, RightOutlined } from '@ant-design/icons'
 
-const LogOutButton = () => {
-  const dispatch = useDispatch()
-
-  const logOut = () => {
-    dispatch(signOutAction())
-  }
-
-  return (
-    <Button onClick={logOut} type="link" icon={<LogoutOutlined />}>
-      Sign out
-    </Button>
-  )
+interface Colors {
+  red: string
+  green: string
 }
 
-const menu = (
-  <Menu>
-    <Menu.Divider />
-    <Menu.Item key="2">
-      <LogOutButton />
-    </Menu.Item>
-  </Menu>
-)
+const colors: Colors = {
+  red: '#f50',
+  green: '#87d068',
+}
 
-const DropDown = () => {
-  const {
-    userData: { userName },
-  } = useTypedSelector((state) => ({
-    userData: state.userData,
-  }))
+type TagColor = 'red' | 'green'
+
+interface IDropDown {
+  title: string
+  tagColor: TagColor
+  words?: Array<IWordAfterGame>
+}
+
+const DropDown: FC<IDropDown> = ({ title, tagColor, words }) => {
+  const [isHide, setIsHide] = useState(true)
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        cursor: 'pointer',
-        minWidth: 150,
-      }}
-    >
-      <Avatar icon={<UserOutlined />} style={{ backgroundColor: '#1DA57A' }} />
-      <Dropdown overlay={menu} placement="bottomCenter">
-        <Typography.Text style={{ fontSize: 16, marginLeft: 10 }}>
-          {userName !== ' ' ? userName : <Spin size="small" />}
-        </Typography.Text>
-      </Dropdown>
+    <div>
+      <p>
+        {title} <Tag color={colors[tagColor]}>{words?.length || 0}</Tag>{' '}
+        <Button
+          size="small"
+          type="text"
+          icon={isHide ? <DownOutlined /> : <RightOutlined />}
+          onClick={() => {
+            setIsHide(!isHide)
+          }}
+        />
+      </p>
+      {!isHide && (
+        <>
+          {words?.map((word) => {
+            return <WordItem key={word.id} word={word} />
+          })}
+        </>
+      )}
     </div>
   )
 }

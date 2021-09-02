@@ -12,7 +12,7 @@ import {
   UserDataActionTypes,
 } from '../../UserData/interfaces'
 
-function* signinWorker(action: ISigninAction | ISignupAction): any {
+function* authWorker(action: ISigninAction | ISignupAction): any {
   try {
     yield put(authSetIsLoadingAction(true))
     const user = yield call(() =>
@@ -23,7 +23,6 @@ function* signinWorker(action: ISigninAction | ISignupAction): any {
     )
     yield put(setUserAction(user))
   } catch (error) {
-    console.log(error)
     yield put(authSetErrorAction(error.message))
   }
 }
@@ -34,11 +33,11 @@ function* logOutWorker(): any {
 }
 
 export function* signinWatcher() {
-  yield takeEvery(UserDataActionTypes.SIGNIN, signinWorker)
+  yield takeEvery(UserDataActionTypes.SIGNIN, authWorker)
 }
 
 export function* signupWatcher() {
-  yield takeEvery(UserDataActionTypes.SIGNUP, signinWorker)
+  yield takeEvery(UserDataActionTypes.SIGNUP, authWorker)
 }
 
 export function* logOutWatcher() {

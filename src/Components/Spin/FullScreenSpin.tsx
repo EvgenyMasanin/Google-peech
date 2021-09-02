@@ -1,21 +1,10 @@
 import { Spin } from 'antd'
 import React from 'react'
+import classes from './spin.module.css'
 
 const FullSizeSpin = () => {
   return (
-    <div
-      style={{
-        position: 'absolute',
-        inset: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        opacity: 0.5,
-        backgroundColor: '#000',
-        transition: '0.3s',
-        borderRadius: 5,
-      }}
-    >
+    <div className={classes.fullSpin}>
       <Spin size="large" />
     </div>
   )

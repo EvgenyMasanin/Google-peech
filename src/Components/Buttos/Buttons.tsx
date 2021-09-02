@@ -1,46 +1,60 @@
 import { Button, Col, Row } from 'antd'
-import React from 'react'
+import { SizeType } from 'antd/lib/config-provider/SizeContext'
+import React, { FC } from 'react'
+import { Link } from 'react-router-dom'
+import { paths } from '../../Routes/Routes'
+import classes from './buttons.module.css'
 
-const Buttons = () => {
+type ButtonType =
+  | 'primary'
+  | 'link'
+  | 'text'
+  | 'ghost'
+  | 'default'
+  | 'dashed'
+  | undefined
+
+const buttonConfig: {
+  type: ButtonType
+  size: SizeType
+} = {
+  type: 'primary',
+  size: 'large',
+}
+
+interface IButtons {
+  isLoading: boolean
+  gameStarted: boolean
+  startGame: () => void
+  stopGame: () => void
+}
+
+const Buttons: FC<IButtons> = ({
+  gameStarted,
+  isLoading,
+  startGame,
+  stopGame,
+}) => {
   return (
-    <Row justify="center" gutter={16} style={{ padding: '1rem' }}>
-      <Col style={{ flex: '1 1 20%', maxWidth: '20%' }}>
-        <Button
-          type="primary"
-          size="large"
-          style={{
-            width: '100%',
-            height: 70,
-            borderRadius: 5,
-          }}
-        >
-          Restart
+    <Row className={classes.buttonContainer} gutter={[16, 16]}>
+      <Col xs={24} sm={12} md={8} lg={7} xl={6}>
+        <Button {...buttonConfig} className={classes.button} onClick={stopGame}>
+          End game
         </Button>
       </Col>
-      <Col style={{ flex: '1 1 60%', maxWidth: '60%' }}>
+      <Col xs={24} sm={12} md={8} lg={10} xl={12}>
         <Button
-          type="primary"
-          size="large"
-          style={{
-            width: '100%',
-            height: 70,
-            borderRadius: 5,
-          }}
+          {...buttonConfig}
+          className={classes.button}
+          onClick={startGame}
+          disabled={isLoading || gameStarted ? true : false}
         >
-          Speak please
+          Start game
         </Button>
       </Col>
-      <Col style={{ flex: '1 1 20%', maxWidth: '20%' }}>
-        <Button
-          type="primary"
-          size="large"
-          style={{
-            width: '100%',
-            height: 70,
-            borderRadius: 5,
-          }}
-        >
-          Results
+      <Col xs={24} sm={24} md={8} lg={7} xl={6}>
+        <Button {...buttonConfig} className={classes.button}>
+          <Link to={paths.STATISTIC}>Statistic</Link>
         </Button>
       </Col>
     </Row>

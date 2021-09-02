@@ -1,5 +1,5 @@
 import { IAuthFields } from '../../Components/AuthForm/AuthForm'
-import { firebaseServiceMethods } from '../../Firebase/api'
+import { firebaseServiceMethods, IUser } from '../../Firebase/api'
 
 export enum UserDataActionTypes {
   SIGNIN = 'SIGNIN',
@@ -14,7 +14,7 @@ export enum UserDataActionTypes {
 
 export interface ISetUserAction {
   type: UserDataActionTypes.SET_USER
-  payload: string
+  payload: IUser | null
 }
 
 interface IAuthPayload<T> extends IAuthFields {

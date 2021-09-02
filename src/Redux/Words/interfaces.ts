@@ -1,33 +1,52 @@
 import { IWordData } from '../../Axios/requests'
+import { IGameResults } from '../../Classes/IGemeResults'
 
-export enum wordsActionsTypes {
+export enum WordsActionsTypes {
   GET_WORDS = 'GET_WORDS',
   SET_WORDS = 'SET_WORDS',
+  START_GAME = 'START_GAME',
   SELECT_WORD = 'SELECT_WORD',
   CHANGE_LAVEL = 'CHANGE_LAVEL',
+  SET_USER_WORD = 'SET_USER_WORD',
   SET_IS_LOADING = 'SET_IS_LOADING',
+  SET_GAME_RESULTS = 'SET_GAME_RESULTS',
 }
 
 export interface ISetWordsAction {
-  type: wordsActionsTypes.SET_WORDS
+  type: WordsActionsTypes.SET_WORDS
   payload: Array<Array<IWordData>>
 }
 
 export interface IGetWordsAction {
-  type: wordsActionsTypes.GET_WORDS
+  type: WordsActionsTypes.GET_WORDS
 }
 
 export interface IChangeLevelAction {
-  type: wordsActionsTypes.CHANGE_LAVEL
+  type: WordsActionsTypes.CHANGE_LAVEL
   payload: number
 }
 
 export interface ISelectWordAction {
-  type: wordsActionsTypes.SELECT_WORD
-  payload: IWordData
+  type: WordsActionsTypes.SELECT_WORD
+  payload: IWordData | null
 }
 
 export interface ISetIsLoadingAction {
-  type: wordsActionsTypes.SET_IS_LOADING
+  type: WordsActionsTypes.SET_IS_LOADING
   payload: boolean
+}
+
+export interface ISetGameResultsAction {
+  type: WordsActionsTypes.SET_GAME_RESULTS
+  payload: IGameResults | null
+}
+
+export interface IStartGameAction {
+  type: WordsActionsTypes.START_GAME
+  payload: boolean
+}
+
+export interface ISetUserWordAction {
+  type: WordsActionsTypes.SET_USER_WORD
+  payload: string
 }
