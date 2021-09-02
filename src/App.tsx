@@ -11,6 +11,7 @@ import { useTypedSelector } from './Redux/store'
 import { clearError, setUserAction } from './Redux/UserData/UserDataActions'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
 
+
 const App: React.FC = () => {
   const history = useHistory()
 
