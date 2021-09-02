@@ -1,0 +1,16 @@
+.content {
+  text-align: center;
+  align-self: center;
+  flex: 1 1 auto;
+}
+.active {
+  border-color: #1da57a;
+  background-color: #c4f8e8;
+  transition: 0.3s ease-in-out;
+}
+
+.common {
+  border-color: inherit;
+  background-color: inherit;
+  transition: 0.3s ease-in-out;
+}

@@ -1,0 +1,18 @@
+.fullSpin {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  background-color: #000;
+  transition: 0.3s;
+  border-radius: 5;
+}
+
+.localSpin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
