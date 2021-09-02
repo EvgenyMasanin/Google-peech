@@ -1,6 +1,5 @@
 import React from 'react'
 import RegForm from '../Components/RegistratinoForm/RegForm'
-import ValidateErrorEntity from '../Interfaces/FormInterfaces'
 import { useDispatch } from 'react-redux'
 import { IAuthFields } from '../Components/AuthForm/AuthForm'
 import { signupAction } from '../Redux/UserData/UserDataActions'
