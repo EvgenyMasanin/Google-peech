@@ -21,7 +21,7 @@ export type GetGamesOnRouteEnterResult = Generator<
   IGameResults[]
 >
 
-export type SatisticSagaResult = Generator<ForkEffect<never>, void, any>
+export type SatisticSagaResult = Generator<ForkEffect<never>, void>
 
 export type AuthWorkerResult = Generator<
   | PutEffect<IIsLoadinAction | ISetUserAction | ISetErrorAction>
@@ -30,13 +30,9 @@ export type AuthWorkerResult = Generator<
   IUser | null
 >
 
-export type LogOutWorkerResult = Generator<
-  PutEffect<IClearDataAction>,
-  void,
-  any
->
+export type LogOutWorkerResult = Generator<PutEffect<IClearDataAction>, void>
 
-export type UserWatcherResult = Generator<ForkEffect<never>, void, any>
+export type UserWatcherResult = Generator<ForkEffect<never>, void>
 
 export type GetWordsWorkerResult = Generator<
   PutEffect<ISetIsLoadingAction | ISetWordsAction> | CallEffect<IWordData[][]>,
@@ -50,4 +46,4 @@ export type GetWordsOnRouteEnterResults = Generator<
   IWordData[][]
 >
 
-export type WordaSagaResult = Generator<ForkEffect<never>, void, any>
+export type WordaSagaResult = Generator<ForkEffect<never>, void>

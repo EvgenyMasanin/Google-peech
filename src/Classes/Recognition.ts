@@ -1,9 +1,9 @@
 import MySpeechRecognition from './MySpeechRecognition'
 let recognition: any
 let isStop = false
+
 export class Recognition {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  static startRecognition(callback: Function) {
+  static startRecognition(callback: (text: string) => void) {
     let isResult = false
 
     recognition = new MySpeechRecognition()
