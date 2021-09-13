@@ -51,6 +51,7 @@ const useGame = () => {
   }
 
   const startGame = () => {
+    dispatch(setGameResultsAction(null))
     wordsForGame.current = wordGenerator(words)
     wordsResults.current = [[], [], [], [], [], []]
     dispatch(selectWordAction(null))
@@ -70,7 +71,6 @@ const useGame = () => {
     dispatch(changeLevelAction(0))
     dispatch(startGameAction(false))
     dispatch(selectWordAction(null))
-    dispatch(setGameResultsAction(null))
     Recognition.stopRecognition()
   }
 

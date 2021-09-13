@@ -1,14 +1,15 @@
-import MySpeechRecognition from './MySpeechRecognition'
+const MySpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition
+
 let recognition: SpeechRecognition
 let isStop = false
-export class Recognition {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  static startRecognition(callback: Function) {
-    let isResult = false
 
+export class Recognition {
+  static startRecognition(callback: (text: string) => void) {
+    let isResult = false
     recognition = new MySpeechRecognition()
     recognition.lang = 'en-US'
-    recognition.addEventListener('result', (e) => {
+    recognition.addEventListener('result', (e: any) => {
       isResult = true
       const text = [...e.results]
         .map((r) => r[0])
