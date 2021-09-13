@@ -1,11 +1,12 @@
-import MySpeechRecognition from './MySpeechRecognition'
-let recognition: any
+const MySpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition
+
+let recognition: SpeechRecognition
 let isStop = false
 
 export class Recognition {
   static startRecognition(callback: (text: string) => void) {
     let isResult = false
-
     recognition = new MySpeechRecognition()
     recognition.lang = 'en-US'
     recognition.addEventListener('result', (e: any) => {
@@ -14,7 +15,6 @@ export class Recognition {
         .map((r) => r[0])
         .map((r) => r.transcript)
         .join('')
-      console.log(text)
       callback(text)
     })
     recognition.addEventListener('end', () => {
