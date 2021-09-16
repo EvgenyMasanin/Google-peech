@@ -47,8 +47,7 @@ const AuthForm: FC<IAuthForm<IAuthFields>> = ({
         />
         <FormInput
           title="Password"
-          type="text"
-          InputType={Input.Password}
+          type="password"
           required
           message="Please input your password!"
         />

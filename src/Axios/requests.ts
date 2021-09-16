@@ -15,14 +15,14 @@ const getWords = async (): Promise<Array<Array<IWordData>>> => {
 
   try {
     const responce = [
-      await api.get<IWordData>(`?page=${pages[0]}&group=0`),
-      await api.get<IWordData>(`?page=${pages[1]}&group=1`),
-      await api.get<IWordData>(`?page=${pages[2]}&group=2`),
-      await api.get<IWordData>(`?page=${pages[3]}&group=3`),
-      await api.get<IWordData>(`?page=${pages[4]}&group=4`),
-      await api.get<IWordData>(`?page=${pages[5]}&group=5`),
+      await api.get<IWordData[]>(`?page=${pages[0]}&group=0`),
+      await api.get<IWordData[]>(`?page=${pages[1]}&group=1`),
+      await api.get<IWordData[]>(`?page=${pages[2]}&group=2`),
+      await api.get<IWordData[]>(`?page=${pages[3]}&group=3`),
+      await api.get<IWordData[]>(`?page=${pages[4]}&group=4`),
+      await api.get<IWordData[]>(`?page=${pages[5]}&group=5`),
     ]
-    const wodrsGroups = responce.map((el: any) => {
+    const wodrsGroups = responce.map((el) => {
       return el.data.slice(0, 10)
     })
     return wodrsGroups

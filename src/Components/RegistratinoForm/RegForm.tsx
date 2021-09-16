@@ -7,6 +7,7 @@ import FormSubmit from '../FormControls/FormSubmit'
 import FormWrapper from '../FormWrapper/FormWrapper'
 import UnderFormLink from '../FormControls/UnderFormLink'
 import ValidateErrorEntity from '../../Interfaces/FormInterfaces'
+import { RuleObject, RuleRender } from 'rc-field-form/lib/interface'
 
 const { Title } = Typography
 
@@ -27,12 +28,8 @@ interface IRegForm<T> {
   onFinishFailed?: (errorInfo: ValidateErrorEntity<T>) => void
 }
 
-const validator = ({
-  getFieldValue,
-}: {
-  getFieldValue: (param: string) => string
-}) => ({
-  validator(_: any, value: string) {
+const validator: RuleRender = ({ getFieldValue }): RuleObject => ({
+  validator(_, value) {
     if (!value || getFieldValue('password') === value) {
       return Promise.resolve()
     }
@@ -61,15 +58,13 @@ const RegForm: FC<IRegForm<IRegFields>> = ({
         />
         <FormInput
           title="Password"
-          type="text"
-          InputType={Input.Password}
+          type="password"
           required
           message="Please input your password!"
         />
         <FormInput
           title="Confirm password"
-          type="text"
-          InputType={Input.Password}
+          type="password"
           required
           message="Please confirm password!"
           rules={[validator]}

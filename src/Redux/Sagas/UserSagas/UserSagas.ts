@@ -27,8 +27,8 @@ function* authWorker(action: ISigninAction | ISignupAction): AuthWorkerResult {
       )
     )
     yield put(setUserAction(user))
-  } catch (error: any) {
-    yield put(authSetErrorAction(error.message))
+  } catch (error) {
+    if (error instanceof Error) yield put(authSetErrorAction(error.message))
   }
 }
 

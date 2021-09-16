@@ -9,20 +9,20 @@ export class Recognition {
     let isResult = false
     recognition = new MySpeechRecognition()
     recognition.lang = 'en-US'
-    recognition.addEventListener('result', (e: any) => {
+    recognition.onresult = (e: SpeechRecognitionEvent) => {
       isResult = true
       const text = [...e.results]
         .map((r) => r[0])
         .map((r) => r.transcript)
         .join('')
       callback(text)
-    })
-    recognition.addEventListener('end', () => {
+    }
+    recognition.onend = () => {
       if (isResult || isStop) {
         isResult = false
         isStop = false
       } else recognition.start()
-    })
+    }
 
     recognition.start()
   }

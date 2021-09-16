@@ -12,13 +12,13 @@ interface IStatisticTable {
 }
 
 const StatisticTable: FC<IStatisticTable> = ({ words, isLoading }) => {
-  const [ellipsis, setEllipsis] = useState({} as any)
+  const [ellipsis, setEllipsis] = useState({} as Record<string, boolean>)
 
   useEffect(() => {
     if (words.length) {
       words?.sort((a: IGameResults, b: IGameResults) => b.score - a.score)
       setEllipsis(
-        words?.reduce((accum: any, el) => {
+        words?.reduce((accum: Record<string, boolean>, el) => {
           accum[el.id] = true
           return accum
         }, {})
@@ -52,14 +52,14 @@ const StatisticTable: FC<IStatisticTable> = ({ words, isLoading }) => {
     )
   }
 
-  const renderViev = (_: any, row: IGameResults) => {
+  const renderViev = (value: IGameResults) => {
     return (
       <Button
         type="primary"
         shape="circle"
-        icon={ellipsis?.[row.id] ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+        icon={ellipsis?.[value.id] ? <EyeOutlined /> : <EyeInvisibleOutlined />}
         onClick={() => {
-          setEllipsis({ ...ellipsis, [row.id]: !ellipsis[row.id] })
+          setEllipsis({ ...ellipsis, [value.id]: !ellipsis[value.id] })
         }}
       />
     )

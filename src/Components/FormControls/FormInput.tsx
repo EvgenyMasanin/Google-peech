@@ -1,21 +1,47 @@
 import React from 'react'
 import { Form, Input } from 'antd'
 import { camelCase } from '../../Utils/camelCase'
+import { LiteralUnion } from 'antd/lib/_util/type'
+import { Rule } from 'rc-field-form/lib/interface'
+
+type Type = LiteralUnion<
+  | 'button'
+  | 'checkbox'
+  | 'color'
+  | 'date'
+  | 'datetime-local'
+  | 'email'
+  | 'file'
+  | 'hidden'
+  | 'image'
+  | 'month'
+  | 'number'
+  | 'password'
+  | 'radio'
+  | 'range'
+  | 'reset'
+  | 'search'
+  | 'submit'
+  | 'tel'
+  | 'text'
+  | 'time'
+  | 'url'
+  | 'week',
+  string
+>
 
 interface IFormInput {
   title: string
   required: boolean
   message: string
-  type?: string
-  rules?: Array<any>
-  InputType?: any
+  type?: Type
+  rules?: Array<Rule>
 }
 const FormInput: React.FC<IFormInput> = ({
   title,
   required,
   message,
   type = 'text',
-  InputType = Input,
   rules = [],
 }) => {
   const name = camelCase(title)
@@ -26,7 +52,11 @@ const FormInput: React.FC<IFormInput> = ({
       name={name}
       rules={[{ required, message }, ...rules]}
     >
-      <InputType name={name} type={type} autoComplete="text" />
+      {type === 'password' ? (
+        <Input.Password name={name} type={type} autoComplete="password" />
+      ) : (
+        <Input name={name} type={type} autoComplete="text" />
+      )}
     </Form.Item>
   )
 }

@@ -11,10 +11,14 @@ import { GetGamesOnRouteEnterResult, SatisticSagaResult } from '../Types'
 function* getGamesOnRouteEnter(
   action: LocationChangeAction
 ): GetGamesOnRouteEnterResult {
-  if (action.payload.location.pathname === paths.STATISTIC) {
-    yield put(statisticSetIsLoading(true))
-    const games = yield call(firebaseService.getGames)
-    yield put(setGamesAction(games))
+  try {
+    if (action.payload.location.pathname === paths.STATISTIC) {
+      yield put(statisticSetIsLoading(true))
+      const games = yield call(firebaseService.getGames)
+      yield put(setGamesAction(games))
+    }
+  } catch (e) {
+    console.log(e)
   }
 }
 
