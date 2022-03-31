@@ -33,19 +33,22 @@ const StatisticTable: FC<IStatisticTable> = ({ words, isLoading }) => {
   ) => {
     return (
       <Paragraph
-        style={{ marginTop: '1rem', marginBottom: 0 }}
+        style={{ marginBottom: 0 }}
         ellipsis={{
-          rows: ellipsis?.[row.id] ? 2 : 10,
+          rows: ellipsis?.[row.id] ? 1 : 10,
         }}
       >
         {wordsAfterGame
           .sort((a, b) => b.word.length - a.word.length)
           .map((wordAftergame) => (
             <Fragment key={wordAftergame.id + ind}>
-              <Tag color={wordAftergame.isCorrect ? 'green' : 'red'}>
+              <Tag
+                style={{ marginRight: '100%' }}
+                color={wordAftergame.isCorrect ? 'green' : 'red'}
+              >
                 {wordAftergame.word}
               </Tag>{' '}
-              <br />
+              {/* <br /> */}
             </Fragment>
           ))}
       </Paragraph>
